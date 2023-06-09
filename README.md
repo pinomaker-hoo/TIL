@@ -20,6 +20,8 @@ SI 업체에서 실무를 진행하면서 라이브러리나 프레임워크 등
 
 ## TIL Library
 
-[1. Typescript : Typescript에 대해 학습합니다.](typescript/index.md)
+[Typescript : Typescript에 대해 학습합니다.](typescript/index.md)
 
-[2. MySQL : SQL에 대해 학습합니다.](mysql/index.md)
+[MySQL : SQL에 대해 학습합니다.](mysql/index.md)
+
+[Algorithm : 알고리즘에 대해 학습합니다.](algorithm/index.md)
