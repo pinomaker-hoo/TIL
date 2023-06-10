@@ -392,4 +392,38 @@ Typescript에서는 readonly타입의 배열을 기본으로 지원하기에 이
 
 ```typescript
 const a: readonly number[] = [1, 2, 3];
+
+a[4] = 5; // Error, 읽기 전용이라 수정 불가
+```
+
+<br />
+
+### (13) null, undefiend, void, never
+
+<br />
+
+Javascript는 null, undefined를 이용하여 부재를 표한하며 Typescript도 두 가지를 이용한다.
+
+null과 undefiend는 당연하게도 다른 점이 있는 데 null은 빈 값을 의미ㅏ며 undefined는 아직 정의하지 않는 값을 의미한다.
+
+Typescript는 null과 undefined를 제외하고도 void와 never 타입도 제공하는 데 이를 이용하여 좀 더 세밀하게 특징을 분류할 수 있다.
+
+void는 아무것도 반환하지 않는 함수의 반환 타입이며, never는 절대 반환하지 않는 함수 타입을 가르킨다.
+
+```typescript
+// null 혹은 number를 리턴
+const a = (a: number) => {
+  return a > 10 ? 30 : null;
+};
+
+// undefined 리턴
+const b = () => undefined
+
+// never 리턴
+const c = () => throw TypeError("ERROR")
+
+// void 리턴
+const d = () => {
+  console.log("Hello world")
+}
 ```
