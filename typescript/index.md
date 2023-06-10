@@ -348,3 +348,21 @@ type Dog = { name: string; color: string; age: number };
 type CatOrDog = Cat | Dog; // 유니온
 type CatAndDog = Cat & Dog; // 인터섹션
 ```
+
+<br />
+
+### (11) 배열
+
+<br />
+
+타입스크립트에서의 배열은 연결, 푸시, 검색, 슬라이스 등을 지원하는 특별한 객체 중 하나다.
+
+```typescript
+const a = [1, 2, 3]; // number[]
+const b = ["1", "2"]; // string[]
+const c = [1, 2, "3"]; // (string | number)[]
+```
+
+Typescript에서는 T[]와 Array<T>라는 두가지의 배열 문법을 지원하고 성능 및 의미상은 같다. 필자는 T[]를 주로 사용한다.
+
+보통 배열을 만들 때는 여러가지의 타입이 들어간 배열이 아닌 동형성의 배열 즉 같은 타입을 가진 배열을 만드는 것이 일반적이다. 그 이유는 배열을 연산할 때 각 타입이 가지고 있는 메서드가 각기 다르기 때문이다.
