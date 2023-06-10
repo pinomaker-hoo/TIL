@@ -330,3 +330,21 @@ const minwoo : Person = {
 ```
 
 타입 별칭은 변수 선언과 같이 하나의 타입을 두 번 선언할 수 없으며, 블록 영역에 선언이 해당된다.
+
+<br />
+
+### (10) 유니온과 인터섹션
+
+<br />
+
+A, B라는 두 사물이 있을 때 이의 영역을 합친 합집합을 유니온, 겹치는 부분인 교집합을 인터섹션이라고한다.
+
+타입 스크립트에서는 타입에 적용할 수 있는 특별한 연산자인 유니온과 인터섹션을 제공한다.
+
+```typescript
+type Cat = { name: string; color: string };
+type Dog = { name: string; color: string; age: number };
+
+type CatOrDog = Cat | Dog; // 유니온
+type CatAndDog = Cat & Dog; // 인터섹션
+```
