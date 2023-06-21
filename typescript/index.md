@@ -478,3 +478,25 @@ const add = (a : number, b : number) : number {
 ```
 
 함수는 다양한 방법으로 생성할 수 있는 데 함수 생성자로 함수를 생성하는 것은 타입에 있어서 안전하지 않기에 권장하지 않는다.
+
+<br />
+
+### (1) 선택적 매개변수와 기본 매개변수
+
+<br />
+
+함수에서 ?를 이용하여 선택적 매개변수를 지정할 수 있다. 함수의 매개변수를 선언할 때 ?를 이용하여 선택적 매개변수를 선언한다.
+
+```typescript
+const log(message : string, userId ?: number) => {
+  console.log(message, userId || "Not Found UserID" )
+}
+```
+
+또한 JS와 마찬가지로 매개변수에 기본 값을 지정할 수 있다. 매개변수에 값을 전달하지 않아도 되기에, 선택적 매개변수를 선언하는 것과 같다.
+
+```typescript
+const log(message : string, userId = "Not Found UserID") => {
+  console.log(message, userId)
+}
+```
