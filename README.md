@@ -21,6 +21,8 @@ SI 업체에서 실무를 진행하면서 라이브러리나 프레임워크 등
 
 ## TIL Library
 
+<hr />
+
 [Typescript : Typescript에 대해 학습합니다.](typescript/index.md)
 
 [MySQL : SQL에 대해 학습합니다.](mysql/index.md)
