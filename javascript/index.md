@@ -8,7 +8,7 @@ Javascript에 대해서 정리합니다.
 
 ## 목차
 
-[1.Javascript의 이벤트 루프 모델](#1-javascript의-이벤트-루프-모델)
+[1. Hoisting , Scope](#1-hoisting-scope)
 
 <br />
 <br />
@@ -82,4 +82,30 @@ if (true) {
   var x = 2;
 }
 console.log(x); // 2
+```
+
+<br />
+
+## 2. Closure
+
+<br />
+
+```
+closure = function + environment
+```
+
+클로저는 함수가 하나 생길 때 마다 하나씩 생기며, environment는 함수 자신을 둘러싼 접근할 수 있는 모든 Scope를 의미한다.
+
+<br />
+
+```javascript
+function and(x) {
+  return function print(y) {
+    return x + "and" + y;
+  };
+}
+
+const saltAnd = and("salt");
+console.log(saltAnd("peper")); // salt and peper
+console.log(saltAnd("sugar")); // salt and sugar
 ```
