@@ -73,13 +73,19 @@ setInterval(() => {
 
 이러한 것을 event loop를 block한다고 한다. 이벤트의 순환을 막는 것이다.
 
+<br />
+
 ### non-blocking I/O & offloading
+
+<br />
 
 ```javascript
 fs.readFile(fileName, (err, data) => {});
 
 someTask();
 ```
+
+<br />
 
 위의 코드를 보면 Node에게 파일 Read를 요청하면 워커 스레드에서 파일을 읽기 시작한다. 그러면 다음 동작은 어디가 될까? 바로 콜백을 실행시키지 않고 readFile()의 호출이 끝나면 바로 someTask()를 호출한다. 그 이유는 콜스택이 빌 때까지 처리를 해야하기 때문이다.
 
@@ -88,3 +94,13 @@ Node가 파일을 다 읽으면 콜백큐에 (err, data) => {}를 묶어서 집�
 브라우저나 Node에서 Web API 혹은 Node API의 동작이 끝나면 callback queue에 등록하는 데, 동작이 진행할 동안 메인 스레드와 이벤트 루프는 영향을 받지 않고 계속 실행한다.
 
 이러한 현상을 offloading이라고 하며, Node 서버의 메인 스레드가 하나지만 빠르게 동작할 수 있는 이유다.
+
+<br />
+
+![스크린샷 2023-07-01 오후 10 34 03](https://github.com/pinomaker-hoo/TIL/assets/56928532/0e805402-a231-467a-a6d3-f17a19420db4)
+
+<br />
+
+콜백큐에서 콜백을 꺼내고(없다면 기다림), 그 콜백의 처리가 끝날 때까지 실행하는 것을 반복한다. 하나의 콜백을 처리하는 것은 워커 스레드에 일을 맡기고 다시 JS에 알려줄 것이 있다면 콜백큐에 어떤 일을 해야하는 지 등록한다.
+
+이게 Javascript의 Event Loop다.
