@@ -9,7 +9,8 @@
 ## 목차
 
 - [1. Stack / Queue](#1-stack--queue)
-- [2. Tree](#2-tree)
+- [2. 시간복잡도, Big-O 표기법](#2-시간복잡도-big-o-표기법)
+- [3. Tree](#3-tree)
 
 <br />
 <br />
@@ -122,7 +123,97 @@ Stack에 PUSH를 하면 A Stack에 데이터를 쌓고 있다고 POP을 사용�
 
 <br />
 
-## 2. TREE
+## 2. 시간복잡도, Big-O 표기법
+
+```
+참고 사이트 : https://hanamon.kr/%EC%95%8C%EA%B3%A0%EB%A6%AC%EC%A6%98-time-complexity-%EC%8B%9C%EA%B0%84-%EB%B3%B5%EC%9E%A1%EB%8F%84/
+```
+
+<br />
+
+우리가 어떤 문제를 해결하기 위해서 알고리즘의 로직을 코드로 구현할 때 시간 복잡도를 고민한다는 것은 입력 값의 변화에 따라서 연산을 실행할 때 연산횟수에 비해 시간이 얼마나 걸리는가를 의미한다.
+
+효율적인 알고리즘은 입력 값이 커짐에 따라서 증가하는 시간의 비율을 최소하하는 알고리즘을 의미하고 이 시간 복잡도는 빅-오 표기법을 사용한다.
+
+빅오 표기법에는 Big-O(상한 점근), Big-Ω(하한 점근), Big-θ(그 둘의 평균)의 방법이 있고 각각 최악, 최선, 중간의 경우에 대해 나타내지만 최악을 고려하는 빅오 표기법을 가장 많이 사용한다.
+
+<hr />
+<br />
+
+### 빅오 표기법의 종류
+
+<br />
+
+![image](https://github.com/pinomaker-hoo/TIL/assets/56928532/a68fcd3e-14f1-41d3-b66c-a945d0f36760)
+
+빅오 표기법에는 O(1), O(n), O(log n), O(n2), O(2n)의 종류들이 있다.
+
+1. O(1)
+
+   O(1)은 일정한 복잡도라고 하며 입력 값이 증거한다고 하더라도 시간이 늘어나지 않는 경우를 말한다.
+
+   ```typescript
+   const O_1_algorithm(arr : number[], index : number) => {
+      return arr[index]
+   }
+
+   ```
+
+   이 알고리즘에서는 arr의 사이즈가 아무리 커도 즉시 출력 값을 얻을 수 있다. 따라서 입력 값이 증가하더라도 시간이 늘어나지 않는다.
+
+2. O(n)
+
+   O(n)은 선형 복잡도라고 부르며 입력 값이 증가하면 그 값에 따라 일정하게 시간도 같은 비율로 증가한다.
+
+   입력 값이 10이면 10초가 걸리고 20이면 20초가 걸리는 구조이다.
+
+   ```typescript
+   const O_n_algorithm(arr : number[]) => {
+     for (const item of arr) [
+        console.log("ITEM : " + item)
+     ]
+   }
+
+   ```
+
+   위의 알고리즘에서는 입력 값이 증가하면 같은 비율로 걸리는 시간이 증가한다.
+
+3. O(log n)
+
+   O(log n)은 로그 복잡도라고 부르며 Big-O 복잡도 중에서 O(1)을 제외하고는 가장 빠른 시간 복잡도를 가진다. 이중 트리에서 사용하는 BST에서는 원하는 값을 탐색 할 때, 노드를 이동할 때 마다 경우의 수가 절반이 줄어들기에 점차 걸리는 시간이 줄어든다.
+
+   O(log n)은 이와 같은 로직이다.
+
+4. O(n2)
+
+   O(n2)는 2차 복잡도라고 부르며 입력 값이 증가할 수록 시간은 n의 제곱의 비율로 증가한다. 즉 3을 넣었더니 3초가 걸렸는데 10을 넣었더니 100초가 걸리는 것이다.
+
+   ```typescript
+   const o_quadratic_algorithm(arr : number[]) => {
+      for(const item of arr) {
+        for (const item2 of arr){
+          console.log(item2)
+        }
+      }
+   }
+   ```
+
+5. O(2n)
+
+   O(2n)은 기하급수적 복잡도라고 하며 빅오 표기법 중에서 가장 느리다. 종이를 42번 접으면 두께가 달까지 간다는 데 이와 비슷하게 들어간 데이터가 커지면 말도 안되게 시간이 늘어나기에 다른 알고리즘으로 접근하는 것이 좋다.
+
+   ```tpyescript
+     const fibonacci = (n) => {
+       if( n <= 1){
+         return 1
+       }
+       return fibonacci(n - 1) + fibonacci(n - 2);
+     }
+   ```
+
+<br />
+
+## 3. TREE
 
 <br />
 
@@ -163,3 +254,11 @@ Stack에 PUSH를 하면 A Stack에 데이터를 쌓고 있다고 POP을 사용�
 트리를 사용하여 데이터를 정렬하고 저장하는 경우를 많이 볼 수 있는 데 가장 흔하게 사용하는 것은 BST, Binary Search Tree다.
 
 이 구조에서는 Left Node는 반드시 부모의 값보다 작고 Right Node는 부모보다 크다.
+
+```
+
+```
+
+```
+
+```
