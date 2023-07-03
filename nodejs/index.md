@@ -9,6 +9,7 @@
 ## 목차
 
 [1.Javascript의 이벤트 루프 모델](#1-javascript의-이벤트-루프-모델)
+[2. Node.js의 핵심 개념](#2-nodejs의-핵심-개념)
 
 <br />
 <br />
@@ -104,3 +105,52 @@ Node가 파일을 다 읽으면 콜백큐에 (err, data) => {}를 묶어서 집�
 콜백큐에서 콜백을 꺼내고(없다면 기다림), 그 콜백의 처리가 끝날 때까지 실행하는 것을 반복한다. 하나의 콜백을 처리하는 것은 워커 스레드에 일을 맡기고 다시 JS에 알려줄 것이 있다면 콜백큐에 어떤 일을 해야하는 지 등록한다.
 
 이게 Javascript의 Event Loop다.
+
+<br />
+
+# 2. Node.js의 핵심 개념
+
+<br />
+
+## (1) 파일 시스템, Module
+
+Node.js의 파일 시스템은 모듈이다. 공식 문서에 따르면 하나의 파일들이 각각 모듈로 취급되며 이 모듈들을 내보내고 가져오는 것을 module.exports와 require()를 통하여 할 수 있다.
+
+```javascript
+// a.js
+const animals = ["dog", "cat"];
+
+module.exports = animals;
+
+// b.js
+console.log(require("./a.js")); // ["dog", "cat"]
+```
+
+Node.js모듈 시스템에는 commonJS와 ECMAScript 2가지가 존재하는 데 표준은 commonJS는 require()를 ECMAScript는 export, import 문법을 사용한다.
+
+해당 차이점에 대해서는 나중에 학습하여 기록할 예정이다. 참고로 ECMAScript가 표준이지만 Node.js에서는 commonJS를 사용한다.(현재는 둘 다 사용가능) 또한 node.js에서 ECMAScript를 사용하기 위해서는 mjs 확장자를 사용한다.
+
+```javascript
+// a.js
+const animals = ["dog", "cat"];
+console.log("a.js loaded!"); // a.js loaded
+module.exports = animals;
+
+// b.js
+const a = require("./a.js");
+const b = require("./a.js");
+const c = require("./a.js");
+
+console.log(a, b, c); //  ["dog", "cat"],  ["dog", "cat"],  ["dog", "cat"]
+```
+
+위의 코드를 보면 a, b, c에 a.js 모듈을 호춣하여 저장을 하였는 데, 실제로는 호출이 한 번된다. require()를 3번 사용했지만 console.log("a.js loaded")가 1번 실행된다. 즉 파일 시스템은 한 번 호출된다.
+
+```javascript
+const http = require("http");
+const a = require("./a.js");
+```
+
+node standard Library에 있는 모듈들은 절대 경로를 지정해 가져오지만 이 프로젝트 내의 다른 파일은 상대 경로를 지정해 가져온다.
+
+하지만 내 프로젝트 내에 임의로 node_modules 폴더를 만들고 그 안에 파일을 넣으면 절대 경로로 가져올 수도 있다.
