@@ -184,3 +184,22 @@ const bufFromFile = fs.readFileSync("src/tes");
 console.log(buf); // // <Buffer 61 62 63 64 65>
 console.log(buf.compare(bufFromFile));
 ```
+
+<br />
+
+## (3) Node.js의 내장 객체
+
+<br />
+
+1. \_\_dirname, \_\_filename
+
+   \_\_dirname과 \_\_filename은 각각 현재 경로의 위치와 현재 파일의 경로 + 위치를 알 수 있는 객체다.
+
+   ```javascript
+   console.log(__dirname);
+   // /home/coder/project/src
+
+   console.log(__filename);
+
+   // /home/coder/project/src/main.js
+   ```
