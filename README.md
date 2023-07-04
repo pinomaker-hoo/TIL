@@ -32,3 +32,7 @@ SI 업체에서 실무를 진행하면서 라이브러리나 프레임워크 등
 [AWS : AWS와 네트워크에 대해 학습합니다.](aws/index.md)
 
 [Java : Java에 대해 학습합니다.](java/index.md)
+
+[Javascript : Javascript에 대해 학습합니다.](javascript/index.md)
+
+[Node.js : Node.js에 대해 학습합니다.](nodejs/index.md)
