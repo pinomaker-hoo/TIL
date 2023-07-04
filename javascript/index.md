@@ -262,3 +262,49 @@ arr.sort(function (a, b) {
   return a.price - b.price;
 });
 ```
+
+(2) join, split, reverse
+3개의 메서드는 배열을 문자열로 바꾸거나, 반대로 하거나, 배열의 순서를 뒤집는 메소드다.
+
+1.  join
+
+    배열을 문자열로 변환한 값을 리턴하는 함수다.
+
+    ```javascript
+    const arr = ["a", "b", "c"];
+    console.log(arr.join()); // abc
+    ```
+
+    join에 넘기는 파라미터는 배열 요소를 문자열로 바꿀 때 요소들의 사이에 문자열을 넣을 수 있다.
+
+    ```javascript
+    const arr = ["a", "b", "c"];
+    console.log(arr.join("-")); // a-b-c
+    ```
+
+2.  split
+
+    문자열을 배열로 변환한 값을 리턴한는 함수다.
+
+    ```javascript
+    const str = "abc";
+    console.log(str.split()); // ["a", "b", "c"]
+    ```
+
+    join과 비슷하게 구분자를 기준으로 쪼개서 배열을 만들 수도 있다.
+
+    ```javascript
+    const str = "a-b-c";
+    console.log(str.split("-")); // ["a", "b", "c"]
+    ```
+
+3.  reverse
+
+    배열의 아이템 순서를 뒤집는 메소드로, 주의해야할 점은 새로운 배열을 리턴하는 것이 아니라 원본 배열을 수정한다는 것이다.
+
+    ```javascript
+    const arr = [1, 2, 3];
+    const response = arr.reverse();
+    console.log(response); // [3,2,1]
+    console.log(arr); // [3,2,1]
+    ```
