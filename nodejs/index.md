@@ -154,3 +154,33 @@ const a = require("./a.js");
 node standard Library에 있는 모듈들은 절대 경로를 지정해 가져오지만 이 프로젝트 내의 다른 파일은 상대 경로를 지정해 가져온다.
 
 하지만 내 프로젝트 내에 임의로 node_modules 폴더를 만들고 그 안에 파일을 넣으면 절대 경로로 가져올 수도 있다.
+
+<br />
+
+## (2) Buffer
+
+<br />
+
+Buffer는 고정된 길이의 Byte 시퀀스를 표현하는 데 사용하는 객체다. Javasript Unit8Array의 subclass다.
+
+```javascript
+// test
+abcde;
+
+// main.js
+const fs = require("fs");
+
+const result = fs.readFileSync("src/tes");
+console.log(result); // <Buffer 61 62 63 64 65>
+```
+
+1byte는 8bit로, 0 ~ 255 사이읭 값을 가지게 된다.(0~2^8-1) 위에 코드에 나온 숫자들은 abcde를 아스키코드로 바꾼 값과 같다.
+
+```javascript
+// abcde의 아스키코드(10진수)를 이용하여 Buffer 생성
+const buf = Buffer.from([97, 98, 99, 100, 101]);
+const bufFromFile = fs.readFileSync("src/tes");
+
+console.log(buf); // // <Buffer 61 62 63 64 65>
+console.log(buf.compare(bufFromFile));
+```
