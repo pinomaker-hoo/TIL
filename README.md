@@ -39,4 +39,6 @@ SI 업체에서 실무를 진행하면서 라이브러리나 프레임워크 등
 
 [Node.js : Node.js에 대해 학습합니다.](nodejs/index.md)
 
+[Kubernetes : 쿠버네티스 기초 대해 학습합니다.](kubernetes/easy.md)
+
 [Kubernetes : 쿠버네티스에 대해 학습합니다.](kubernetes/index.md)
