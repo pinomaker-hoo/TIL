@@ -500,3 +500,75 @@ const log(message : string, userId = "Not Found UserID") => {
   console.log(message, userId)
 }
 ```
+
+<br />
+
+### (2) 나머지 매개변수
+
+<br />
+
+인수를 여러 개 받는 함수라면 배열 형태로 목록을 넘길 수도 있다.
+
+```typescript
+const sum = (numbers: number[]): number => {
+  return numbers.reduce((ocr, cur) => ocr + cur, 0);
+};
+
+sum([1, 2, 3]); // 6
+```
+
+<br/>
+
+떄론 고정 인자 API가 아니라 가변 인자 API가 필요할 때가 있는 데, JS에서는 이를 arguments 객체를 통하여 기능을 제공했다. 하지만 arguments는 순수 배열이 아니기에 reduce와 같은 내장 기능을 사용할려면 배열로 변환해야한다.
+
+<br/>
+
+```typescript
+const sum2 = (): number => {
+  return Array.from(arguments).reduce((ocr, cur) => ocr + cur, 0);
+};
+
+sum2(1, 2, 3); // 6
+```
+
+<br/>
+다만 arguments 객체는 안전하지 않다. Typescript에서는 ocr과 cur을 모두 any로 타입을 추론하게 되며, 함수를 호출하게 될 때는 TypeError를 발생시킨다.
+
+이러한 문제는 나머지 매개변수로 아래와 같이 해결한다.
+
+<br />
+
+```typescript
+const sum3 = (...numbers: number[]): number => {
+  return numbers.reduce((ocr, cur) => ocr + cur, 0);
+};
+
+sum2(1, 2, 3); // 6
+```
+
+<br />
+
+이렇게 선언하면 타입 안정성을 갖추게 되었고, 내장 메서드도 사용 가능해졌다.
+
+<br />
+
+### (3) call, apply, bind
+
+<br />
+
+함수를 호출하는 방법은 ()를 이용하는 것도 있지만, apply와 call, bind를 활용하는 방법도 있다.
+
+```typescript
+const add = (a: number, b: number) => {
+  return a + b;
+};
+
+add(10, 20);
+add.apply(null, [10, 20]);
+add.call(null, 10, 10);
+add.bind(null, 10, 20)();
+```
+
+apply는 함수 안에서 값을 this로 한정하며, 두번째 인수를 펼쳐서 매개변수로 전달하고 call도 비슷하지만 인수를 펼치지 않고 순서대로 전달한다는 차이점이 있다.
+
+bind는 함수를 호출하는 것이 아니라 새로운 함수를 반환하기에 한정하지 않은 매개변수를 추가로 전달할 수 있다.
