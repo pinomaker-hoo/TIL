@@ -48,3 +48,5 @@ SI 업체에서 실무를 진행하면서 라이브러리나 프레임워크 등
 [Git : Git에 대해 학습합니다.](git/index.md)
 
 [Typeorm : Typeorm에 대해 학습합니다.](typeorm/index.md)
+
+[Redux : Redux에 대해 학습합니다.](redux/index.md)
