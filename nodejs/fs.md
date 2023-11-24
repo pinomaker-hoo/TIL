@@ -40,7 +40,7 @@ console.log("동기 : ", text);
 비동기 :  Hello world
 ```
 
-## writeFile
+### writeFile
 
 writeFile은 readFile과 반대로 읽는 것이 아닌 파일을 출력하는 메서드다.
 
@@ -62,7 +62,7 @@ console.log("동기 파일 생성");
 
 해당 코드를 실행하면 위와 마찬가지로 동기 파일 생성이 먼저 로그에 찍히게 되고 파일이 생성된 것을 확인할 수 있다.
 
-## 예외처리
+### 예외처리
 
 동기와 비동기 메서드는 각 예외처리를 하는 방법이 다르다.
 
@@ -92,4 +92,24 @@ try {
 } catch (err) {
   console.log(err);
 }
+```
+
+<br />
+
+### Promise 처리
+
+FS Module도 Promise를 이용하여 처리가 가능하다.
+
+```javascript
+const fs = require("fs");
+const fsPromise = fs.promises;
+
+fsPromise
+  .readFile("./sample.txt")
+  .then((res) => {
+    console.log(res.toString());
+  })
+  .catch((err) => {
+    console.log(err);
+  });
 ```
