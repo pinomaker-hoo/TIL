@@ -66,3 +66,74 @@ const user = new Person("pinomaker");
 console.log(user.name); // pinomaker
 console.log(user.age); // undefined
 ```
+
+## 객체 프로퍼티 접근
+
+앞서 말한대로 객체는 값과 키로 구성되어있다. 여기에서 키는 일반적으론 문자열을 지정하며, 문자열이나 symbol이외의 값을 지정하면 타입이 문자열로 변환된다. 프로퍼티 키는 문자열이기에 따옴표를 사용하지만 Javascript에서 사용 가능한 값일 경우는 따옴표를 생략 할 수 있다.
+
+```javascript
+const person = {
+  "first-name": "pino", // first-name은 연산자가 포함되어있기에 문자열로 감쌈.
+  age: 20, // age는 사용 가능
+};
+```
+
+참고로 변수 선언을 아래와 같이 변수를 프로퍼티 키로 사용이 가능하다.
+
+```javascript
+const key = "age";
+
+const person = {
+  [key]: 20,
+};
+```
+
+프로퍼티 키를 이용하여 값을 가져오는 방식은 마침표 표기법과 대괄호 표기법 2개를 사용할 수 있다.
+
+```javascript
+const person = {
+  name: "pinomaker",
+  age: 20,
+};
+
+console.log(person.name);
+console.log(person[age]);
+```
+
+## Pass-by-reference
+
+Object의 Type을 객체 타입 혹은 참조 타입이라고 하는 데 참조 타입은 객체의 모든 연산이 실제값이 아닌 참조값으로 처리됨을 의미한다. 원시 타입 값은 한 번 정해지면 변경할 수 없지만 객체는 프로퍼티를 변경 추가가 가능하다.
+
+즉 객체 타입은 동적으로 변화할 수 있기에 메모리 공간을 얼마나 확보해야하는 지 예측할 수 없기에 런타임에 메모리 공간을 확보하고 메모리의 힙 영역에 저장된다.
+
+```javascript
+const pino = {
+    age : 20;
+}
+
+const maker = pino
+
+console.log(pino.age, maker.age) // 20 20
+console.log(pino === maker) // true
+
+maker.age = 30;
+
+console.log(pino.age, maker.age) // 30 30
+console.log(pino === maker) // true
+```
+
+pino 객체를 리터럴로 생성하였다. 이 때 pino는 객체 자체를 저장하는 게 아니라 생성된 객체의 참조값을 저장하고 있다. 그 후에 maker에 pino를 할당하게 되면 pino가 바라보는 객체 참조값이 maker에 저장되게 된다.
+
+즉 동일한 객체를 참조하기에 두 변수 모두 하나만 변경하더라도 같은 프로퍼티값을 참조하기에 결과가 같아진다.
+
+![image](https://github.com/pinomaker-hoo/TIL/assets/56928532/89b00be7-e4e0-4564-ad87-591be3c27831)
+
+## Pass by value
+
+원시 타입은 값으로 전달된다. 즉 변수에 다른 값을 전달할 때 복사가 되기에 참조와 다르다. 원시 타입은 값이 한 번 정해지면 변경할 수 없기에 이들 값은 런타임(변수 할당 시점)에 메모리 스택 영역에 고정된 메모리 영역을 점유하고 저장한다.
+
+## Object의 종류
+
+Built-in Object는 웹 페이지등을 표현하기 위한 공통된 기능을 제공한다. 웹페이지가 브라우저에 로드되자마자 바로 사용이 가능하며 이는 Standard Built-in Object, BOM, DOM으로 나누어질 수 있다. 또한 사용자가 직접 생성한 객체는 Host Object라고 정의한다.
+
+![image](https://github.com/pinomaker-hoo/TIL/assets/56928532/adf0e519-e9e1-45d9-9c4b-8b460866d918)
