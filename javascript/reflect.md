@@ -52,3 +52,31 @@ console.log(say.name); // hello
 Reflect를 통해 이미 JS에 정의된 속성을 다룰 수 있게 되었지만, 이것만으로는 특정 어플리케이션에서 다루는 데이터를 프로그램 수준에서 저장할 수 없다는 한계가 있고 이를 극복하기 위해 나온 라이브러리가 reflect-metadata라고 합니다.
 
 메타데이터에 저장할 내부 슬릇을 추가하고 접근할 수 있는 Reflect API에 대한 제안이 있었지만 아직 수용되지 않았고 그 전에 해당 라이브러리가 나왔다고 합니다.
+
+## Reflect-metadata
+
+Reflect-metadata에선 defineMetadata를 이용하여 메타데이터를 등록하고, getMetadata를 이용하여 메타데이터를 조회할 수 있다.
+
+```javascript
+// 저장
+Reflect.defineMetadata(metadataKey, metadataValue, target);
+
+// 조회
+Reflect.getMetadata(metadataKey, target);
+```
+
+자 위의 코드를 간단하게 보면 먼저 등록 부분을 보면 metadataKey, metadataValue, target를 받는 것을 알 수 있다.
+
+defineMetadata는 target이라는 객체에 metadataKey라는 키에 metadataValue를 등록한다.
+
+그리고 조회를 할 때는 getMetadata를 이용하여 target이라는 객체의 metadataKey의 값을 꺼내서 조회하는 것을 알 수 있다. 예제를 보자
+
+```javascript
+import "reflect-metadata";
+
+const say = () => {};
+
+Reflect.defineMetadata("hello", "Hello World", say);
+
+console.log(Reflect.getMetadata("hello", say)); // Hello world
+```
