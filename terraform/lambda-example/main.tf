@@ -1,104 +1,71 @@
+# AWS 프로바이더 설정
+# region: AWS 리전 지정 (variables.tf에서 정의)
+# profile: AWS CLI에 설정된 프로필 이름 (mas9 프로필 사용)
 provider "aws" {
   region = var.aws_region
+  profile = "mas9"
 }
 
-# IAM role for Lambda
+# Lambda 함수 실행을 위한 IAM 역할 생성
+# 이 역할은 Lambda 서비스가 맡아서 실행할 수 있는 권한을 가짐
 resource "aws_iam_role" "lambda_role" {
-  name = "lambda_execution_role"
+  name = "lambda_execution_role"  # IAM 역할 이름
 
+  # 신뢰 관계 정책: Lambda 서비스가 이 역할을 맡을 수 있도록 허용
   assume_role_policy = jsonencode({
     Version = "2012-10-17"
     Statement = [
       {
-        Action = "sts:AssumeRole"
-        Effect = "Allow"
+        Action = "sts:AssumeRole"  # 역할 수임 액션
+        Effect = "Allow"          # 허용
         Principal = {
-          Service = "lambda.amazonaws.com"
+          Service = "lambda.amazonaws.com"  # Lambda 서비스만 이 역할을 맡을 수 있음
         }
       }
     ]
   })
 }
 
-# Attach basic Lambda execution policy to the role
+# Lambda 기본 실행 정책을 역할에 연결
+# 이 정책은 CloudWatch Logs에 로그를 쓸 수 있는 권한을 제공
 resource "aws_iam_role_policy_attachment" "lambda_basic" {
-  role       = aws_iam_role.lambda_role.name
-  policy_arn = "arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
+  role       = aws_iam_role.lambda_role.name  # 위에서 생성한 역할 이름
+  policy_arn = "arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"  # AWS 관리형 정책 ARN
 }
 
-# Archive file for Lambda function code
+# Lambda 함수 코드를 ZIP 파일로 압축
+# Lambda 배포를 위해서는 코드를 ZIP 형식으로 압축해야 함
 data "archive_file" "lambda_zip" {
-  type        = "zip"
-  source_file = "${path.module}/lambda_function.js"
-  output_path = "${path.module}/lambda_function.zip"
+  type        = "zip"                                 # 압축 유형
+  source_file = "${path.module}/lambda_function.js"  # 압축할 소스 파일 경로
+  output_path = "${path.module}/lambda_function.zip" # 출력 ZIP 파일 경로
 }
 
-# Lambda function
+# Lambda 함수 리소스 생성
 resource "aws_lambda_function" "example_lambda" {
-  function_name    = var.lambda_function_name
-  filename         = data.archive_file.lambda_zip.output_path
-  source_code_hash = data.archive_file.lambda_zip.output_base64sha256
-  role             = aws_iam_role.lambda_role.arn
-  handler          = "lambda_function.handler"
-  runtime          = var.lambda_runtime
-  timeout          = var.lambda_timeout
-  memory_size      = var.lambda_memory_size
+  function_name    = var.lambda_function_name                      # Lambda 함수 이름 (variables.tf에서 정의)
+  filename         = data.archive_file.lambda_zip.output_path      # ZIP 파일 경로
+  source_code_hash = data.archive_file.lambda_zip.output_base64sha256  # 코드 변경 감지를 위한 해시값
+  role             = aws_iam_role.lambda_role.arn                 # 실행 역할 ARN
+  handler          = "lambda_function.handler"                    # 핸들러 함수 지정 (파일명.함수명)
+  runtime          = var.lambda_runtime                           # 런타임 (variables.tf에서 정의, 예: nodejs18.x)
+  timeout          = var.lambda_timeout                           # 제한 시간 (초)
+  memory_size      = var.lambda_memory_size                       # 메모리 크기 (MB)
 
+  # 환경 변수 설정
   environment {
     variables = {
-      ENVIRONMENT = "dev"
+      ENVIRONMENT = "dev"  # 개발 환경임을 나타내는 환경 변수
     }
   }
 }
 
-# CloudWatch Log Group for Lambda
+# Lambda 함수의 로그를 저장할 CloudWatch 로그 그룹 생성
 resource "aws_cloudwatch_log_group" "lambda_log_group" {
-  name              = "/aws/lambda/${aws_lambda_function.example_lambda.function_name}"
-  retention_in_days = 14
+  name              = "/aws/lambda/${aws_lambda_function.example_lambda.function_name}"  # 로그 그룹 이름
+  retention_in_days = 14  # 로그 보존 기간 (14일)
 }
 
-# Optional: API Gateway trigger for Lambda
-resource "aws_apigatewayv2_api" "lambda_api" {
-  name          = "lambda-api"
-  protocol_type = "HTTP"
-}
 
-resource "aws_apigatewayv2_stage" "lambda_stage" {
-  api_id      = aws_apigatewayv2_api.lambda_api.id
-  name        = "$default"
-  auto_deploy = true
-}
 
-resource "aws_apigatewayv2_integration" "lambda_integration" {
-  api_id             = aws_apigatewayv2_api.lambda_api.id
-  integration_type   = "AWS_PROXY"
-  integration_uri    = aws_lambda_function.example_lambda.invoke_arn
-  integration_method = "POST"
-}
-
-resource "aws_apigatewayv2_route" "lambda_route" {
-  api_id    = aws_apigatewayv2_api.lambda_api.id
-  route_key = "GET /hello"
-  target    = "integrations/${aws_apigatewayv2_integration.lambda_integration.id}"
-}
-
-resource "aws_lambda_permission" "api_gateway" {
-  statement_id  = "AllowExecutionFromAPIGateway"
-  action        = "lambda:InvokeFunction"
-  function_name = aws_lambda_function.example_lambda.function_name
-  principal     = "apigateway.amazonaws.com"
-  source_arn    = "${aws_apigatewayv2_api.lambda_api.execution_arn}/*/*/hello"
-}
-
-# Outputs
-output "lambda_function_name" {
-  value = aws_lambda_function.example_lambda.function_name
-}
-
-output "lambda_function_arn" {
-  value = aws_lambda_function.example_lambda.arn
-}
-
-output "api_gateway_url" {
-  value = "${aws_apigatewayv2_stage.lambda_stage.invoke_url}/hello"
-}
+# 출력값은 outputs.tf 파일에 정의되어 있음

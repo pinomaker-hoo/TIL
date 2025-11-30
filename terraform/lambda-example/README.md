@@ -5,7 +5,6 @@
 - Lambda 함수
 - Lambda 실행 역할 (IAM Role)
 - CloudWatch 로그 그룹
-- API Gateway HTTP API (Lambda 함수 호출용)
 
 ## 사전 요구사항
 
@@ -60,15 +59,8 @@ aws lambda invoke --function-name example-lambda-function --payload '{}' respons
 cat response.json
 ```
 
-또는 출력된 API Gateway URL을 사용하여 브라우저나 curl로 테스트할 수 있습니다:
-
-```bash
-curl $(terraform output -raw lambda_invoke_url)
-```
-
 ## 주요 리소스
 
 - `aws_lambda_function`: Lambda 함수 리소스
 - `aws_iam_role`: Lambda 실행을 위한 IAM 역할
-- `aws_apigatewayv2_api`: HTTP API Gateway
 - `aws_cloudwatch_log_group`: Lambda 로그를 저장하는 CloudWatch 로그 그룹

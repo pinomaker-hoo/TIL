@@ -153,20 +153,20 @@ output "api_gateway_url" {
 
 ```javascript
 exports.handler = async (event) => {
-  console.log('Event: ', JSON.stringify(event, null, 2));
-  
+  console.log("Event: ", JSON.stringify(event, null, 2));
+
   const response = {
     statusCode: 200,
     headers: {
-      'Content-Type': 'application/json',
+      "Content-Type": "application/json",
     },
     body: JSON.stringify({
-      message: 'Hello from Lambda!',
+      message: "Hello from Lambda!",
       timestamp: new Date().toISOString(),
       event: event,
     }),
   };
-  
+
   return response;
 };
 ```
@@ -174,21 +174,25 @@ exports.handler = async (event) => {
 ## 실행 방법
 
 1. Terraform 초기화:
+
 ```bash
 terraform init
 ```
 
 2. 실행 계획 확인:
+
 ```bash
 terraform plan
 ```
 
 3. 리소스 생성:
+
 ```bash
 terraform apply
 ```
 
 4. 리소스 삭제:
+
 ```bash
 terraform destroy
 ```
