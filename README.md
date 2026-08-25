@@ -64,3 +64,5 @@ SI 업체에서 실무를 진행하면서 라이브러리나 프레임워크 등
 [Cache : 캐시에 대해 학습합니다.](cache/index.md)
 
 [AI : LLM, RAG, AI 에이전트와 하네스 엔지니어링에 대해 학습합니다.](ai/index.md)
+
+[기술 면접 : DB, MSA, MQ, Redis/Valkey 기술 면접 예상 질문과 학습 주제를 정리합니다.](interview/index.md)
