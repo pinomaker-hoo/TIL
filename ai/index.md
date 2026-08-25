@@ -8,6 +8,9 @@ AI를 처음 접하는 사람을 위한 학습 자료이다. LLM의 기본 개�
 
 ## 목차
 
+- [AI 컨텍스트와 컨텍스트 엔지니어링](./context-engineering.md)
+- [AI 에이전트 - 스스로 도구를 선택하며 목표를 수행하는 시스템](./ai-agent.md)
+- [하네스 엔지니어링 - 에이전트가 안정적으로 일할 환경 만들기](./harness-engineering.md)
 - [RAG - 외부 지식을 검색해서 답변에 활용하는 방법](./rag.md)
 - [파인튜닝 - 모델 자체를 추가 학습시키는 방법](./fine-tuning.md)
 - [RAG vs 파인튜닝 - 언제 무엇을 써야 하는가](./rag-vs-fine-tuning.md)
