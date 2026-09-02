@@ -47,6 +47,10 @@ SI 업체에서 실무를 진행하면서 라이브러리나 프레임워크 등
 
 [Kubernetes : 쿠버네티스에 대해 학습합니다.](kubernetes/index.md)
 
+[Kubernetes : Minikube 로컬 환경 구성 (macOS)](kubernetes/minikube/mac.md)
+
+[Kubernetes : Minikube 로컬 환경 구성 (Windows)](kubernetes/minikube/windows.md)
+
 [Git : Git에 대해 학습합니다.](git/index.md)
 
 [Typeorm : Typeorm에 대해 학습합니다.](typeorm/index.md)
