@@ -1,0 +1,19 @@
+apiVersion: apps/v1 # 이 리소스가 쓰는 API 버전 (Deployment는 apps/v1)
+kind: Deployment # 만들 리소스 종류 = Deployment
+metadata: # 리소스 자체의 메타정보
+  name: web # 이 Deployment의 이름 (kubectl에서 이 이름으로 다룸)
+spec: # Deployment가 "원하는 상태" 정의
+  replicas: 3 # 유지할 Pod 개수 (하나 죽어도 3개로 자동 복구 = Self-healing)
+  selector: # 이 Deployment가 "관리할 Pod"를 고르는 기준
+    matchLabels: # 아래 라벨을 가진 Pod를 내 것으로 관리
+      app: web # ↓ template의 labels와 반드시 일치해야 함
+  template: # 새로 만들 Pod의 "설계도"
+    metadata: # Pod에 붙일 메타정보
+      labels: # Pod에 붙일 라벨
+        app: web # selector(app: web) 및 service.yaml의 selector와 일치
+    spec: # Pod 안의 내용 정의
+      containers: # Pod에 담을 컨테이너 목록 (여러 개 가능)
+        - name: web # 컨테이너 이름
+          image: nginx:1.25 # 사용할 이미지 (nginx 1.25 버전)
+          ports: # 컨테이너가 여는 포트
+            - containerPort: 80 # nginx가 80번 포트로 서비스

@@ -1,0 +1,12 @@
+apiVersion: v1 # Service는 core API 그룹이라 v1
+kind: Service # 만들 리소스 종류 = Service
+metadata: # 리소스 자체의 메타정보
+  name: web # 이 Service의 이름 (minikube service web 에서 이 이름 사용)
+spec: # Service가 "원하는 상태" 정의
+  type: NodePort # 노출 방식: NodePort(노드 포트로 외부 접속 가능)
+  selector: # 이 Service가 트래픽을 보낼 "대상 Pod" 고르는 기준
+    app: web # deployment.yaml의 Pod 라벨(app: web)과 반드시 일치
+  ports: # 포트 매핑 목록
+    - port: 80 # Service가 클러스터 안에서 노출하는 포트
+      targetPort: 80 # 실제로 트래픽을 보낼 Pod(컨테이너)의 포트
+      # nodePort: 30080    # (선택) 노드에 고정으로 열 포트. 생략하면 30000~32767 중 자동 배정
